@@ -1,0 +1,474 @@
+
+<!-- saved from url=(0064)http://www.simonsingh.net/The_Black_Chamber/playfair_cipher.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>The Black Chamber - Playfair Cipher</title>
+<link rel="stylesheet" href="./The Black Chamber - Playfair Cipher_files/main.css" type="text/css">	
+
+<script type="text/javascript" async="" src="./The Black Chamber - Playfair Cipher_files/ga.js"></script><script language="javascript">
+
+function keyDown() {
+	var keycode = event.keyCode
+	var realkey = String.fromCharCode(event.keyCode)
+	if(keycode==13)
+	{
+	agn_createme()
+	}
+	
+}
+
+document.onkeydown = keyDown
+
+</script>
+<script language="javascript">
+
+var letter=new Array("A", "B", "C", "D", "E", "F", "G", "H", "I","K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+
+////////////****************patter matching**********************///////////////////////
+var pattern=/[0-9\`\~\@\#\$\%\^\&\*\\!(\)\-\_\+\=\;\:\?\>\<\,\.\]\[\{\}\|]/
+function vrfy(obj)
+{
+if(pattern.test(obj))
+	{
+	alert("Numbers and special characters cannot be encrypted.\n Please remove these from the text.");
+	document.form3.actual.focus();return false;
+	}
+else {return true;}	
+}
+////////////***************pattern matching*********************///////////////////////
+
+function get_word(){
+
+var keyword=document.form1.textfield.value.toUpperCase();
+if(keyword.search(" ")!=-1)
+	{
+	keyword=keyword.split(" ");
+	keyword=keyword.join("");
+	}
+
+if(pattern.test(keyword))
+	{
+	alert("Numbers and special characters cannot be encrypted.\n Please remove these from the keyword.");
+	keyword="CHARLES";
+	}
+document.form1.textfield.value=keyword;
+
+var len="";
+var chr="";
+
+for(var rl=0;rl<keyword.length;rl++)
+{	
+	chr=keyword.charAt(rl);
+	len=keyword.split(chr);
+	
+	if(len.length>2)
+	{keyword="";
+	keyword=keyword+len[0]+chr;
+	for(var jj=1;jj<len.length;jj++)
+		{
+		keyword=keyword+len[jj];
+		}
+	
+	}
+	
+
+}
+
+var my_keyword="";
+for(var x=0;x<keyword.length;x++)
+	{
+	if(keyword.charAt(x)!="J")
+		{my_keyword=my_keyword+keyword.charAt(x);}
+	else
+		{my_keyword=my_keyword+"I";}
+	}
+myletterstr=my_keyword;
+	
+for(var y=0;y<letter.length;y++)
+	{
+	if(myletterstr.indexOf(letter[y])==-1)
+	myletterstr=myletterstr+letter[y]
+	}
+
+
+
+}//end of function
+
+function createme()
+{
+
+var count =0;
+for(i=0;i<5;i++)
+	{
+	document.write ("");
+	for(j=0;j<5;j++)
+		{
+		document.write ("");
+		document.write ('<INPUT TYPE=text NAME=txt'+i+j+' SIZE=1 MAXLENGTH=1' +'>');
+		document.write ("");
+		
+		count++;
+		}
+	document.write ("<br/>");
+	}
+agn_createme();	
+}
+
+function agn_createme()
+{
+get_word();
+var dd;
+var count =0;
+for(i=0;i<5;i++)
+	{	
+	for(j=0;j<5;j++)
+		{		
+		dd=eval("document.form2.txt"+i+j);
+		dd.value=myletterstr.charAt(count);
+		count++;
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+var flag=0;//taking the global variable to check weather the form digraph button is clicked
+var form_digraph="";//taking it as global variable
+function frm_digraph()
+{
+form_digraph="";
+flag=1;//taking the global variable to check weather the form digraph button is clicked
+var myval="";
+var myact_val="";
+var nact_val="";
+var act_val=document.form3.actual.value.toUpperCase();
+
+//////////
+if(vrfy(act_val)){
+/////////
+
+if(act_val.indexOf(" ")!=-1)
+{
+	for(var s=0;s<act_val.length;s++)
+		{
+		if(act_val.charAt(s)!=" ")
+		nact_val=nact_val+act_val.charAt(s);	
+		}
+
+	act_val=nact_val;
+}
+
+for(var i=0;i<act_val.length;i++)
+{
+if(act_val.charAt(i)!="J")
+	{
+	 myact_val=myact_val+act_val.charAt(i);
+	}
+else
+	{
+	 myact_val=myact_val+"I";
+	}
+}
+
+for(var i=0;i<myact_val.length;i++)
+{
+	
+	if(myact_val.charAt(i)!=myact_val.charAt(i+1)) 
+		{
+			myval=myval+myact_val.charAt(i);			
+		}
+	
+	else
+		{
+		myval=myval+myact_val.charAt(i)+"X";
+		}
+		
+
+}
+	if(myval.length%2!=0)
+	myval=myval+"X";
+
+for(var i=0;i<myval.length;i=i+2)
+	{
+	form_digraph=form_digraph+myval.substr(i,2)+" ";	
+	}	
+
+form_digraph=form_digraph.substr(0,form_digraph.length-1);
+
+/////////
+}////end of vrfy 
+////////
+
+}//end of function frm_digraph()
+
+function make_digraph()
+{
+document.form3.encpt.value="";
+frm_digraph();
+document.form3.actual.value=form_digraph;
+}
+
+var zz=0;//////////////////////////////////////////for slow
+
+function encipher(){
+/////////////////////////////////////////for slow encrypt///////////////////////
+if(document.form3.rad[0].checked==true)
+{
+if(flag==0)
+{frm_digraph();}
+flag=0;
+var to_encipher="";
+to_encipher=form_digraph.split(" ");
+
+my_ciphertxt="";
+
+for(var i=0;i<=zz;i++){
+
+for(var m=0;m<5;m++)
+	{
+	for(var n=0;n<5;n++)
+		{
+		if(to_encipher[i].charAt(0)==eval("document.form2.txt"+m+n+".value"))
+			{var s1=m;var t1=n;}
+		if(to_encipher[i].charAt(1)==eval("document.form2.txt"+m+n+".value"))
+			{var s2=m;var t2=n;}	
+		}
+	
+	}
+
+if(s1==s2)//same row
+{
+t1=(t1+6)%5;
+t2=(t2+6)%5;
+my_ciphertxt=my_ciphertxt+eval("document.form2.txt"+s1+t1+".value")+eval("document.form2.txt"+s2+t2+".value")+" ";
+}
+else if(t1==t2)//same row
+{
+s1=(s1+1)%5;
+s2=(s2+1)%5;
+my_ciphertxt=my_ciphertxt+eval("document.form2.txt"+s1+t1+".value")+eval("document.form2.txt"+s2+t2+".value")+" ";
+}
+else
+{
+my_ciphertxt=my_ciphertxt+eval("document.form2.txt"+s1+t2+".value")+eval("document.form2.txt"+s2+t1+".value")+" ";
+}
+}//end of for to_encipher
+zz++;
+if(to_encipher.length<=zz)
+{
+zz=0;
+}
+document.form3.encpt.value=my_ciphertxt.substr(0,my_ciphertxt.length-1);
+}//end of if that define which radio button is checked
+
+
+//////////////////////ffor fast encrypt//////////////////////////
+
+
+else if(document.form3.rad[1].checked==true)
+{
+
+if(flag==0)
+{frm_digraph();}
+flag=0;
+var to_encipher="";
+to_encipher=form_digraph.split(" ");
+
+my_ciphertxt="";
+for(var i=0;i<to_encipher.length;i++){
+
+for(var m=0;m<5;m++)
+	{
+	for(var n=0;n<5;n++)
+		{
+		if(to_encipher[i].charAt(0)==eval("document.form2.txt"+m+n+".value"))
+			{var s1=m;var t1=n;}
+		if(to_encipher[i].charAt(1)==eval("document.form2.txt"+m+n+".value"))
+			{var s2=m;var t2=n;}	
+		}
+	
+	}
+	
+if(s1==s2)//same row
+{
+t1=(t1+6)%5;
+t2=(t2+6)%5;
+my_ciphertxt=my_ciphertxt+eval("document.form2.txt"+s1+t1+".value")+eval("document.form2.txt"+s2+t2+".value")+" ";
+}
+else if(t1==t2)//same row
+{
+s1=(s1+1)%5;
+s2=(s2+1)%5;
+my_ciphertxt=my_ciphertxt+eval("document.form2.txt"+s1+t1+".value")+eval("document.form2.txt"+s2+t2+".value")+" ";
+}
+else
+{
+my_ciphertxt=my_ciphertxt+eval("document.form2.txt"+s1+t2+".value")+eval("document.form2.txt"+s2+t1+".value")+" ";
+}
+}//end of for to_encipher
+document.form3.encpt.value=my_ciphertxt.substr(0,my_ciphertxt.length-1);
+}//end of if that define which radio button is checked
+}//end of function
+
+</script>
+<script language="javascript">
+///////////////////////////****************DECIPHER CIPHERTEXT***************///////////////////////
+function decipher()
+{
+var the_encrypt_val=document.form3.encpt.value;
+var to_decipher=the_encrypt_val.split(" ");
+var my_plaintxt="";
+
+for(var i=0;i<to_decipher.length;i++){
+for(var m=0;m<5;m++)
+	{
+	for(var n=0;n<5;n++)
+		{
+		if(to_decipher[i].charAt(0)==eval("document.form2.txt"+m+n+".value"))
+			{var s1=m;var t1=n;}
+		if(to_decipher[i].charAt(1)==eval("document.form2.txt"+m+n+".value"))
+			{var s2=m;var t2=n;}	
+		}
+	
+	}
+	
+if(s1==s2)//same row
+{
+t1=(t1+4)%5;
+t2=(t2+4)%5;
+my_plaintxt=my_plaintxt+eval("document.form2.txt"+s1+t1+".value")+eval("document.form2.txt"+s2+t2+".value")+" ";
+}
+else if(t1==t2)//same column
+{
+s1=(s1+4)%5;
+s2=(s2+4)%5;
+my_plaintxt=my_plaintxt+eval("document.form2.txt"+s1+t1+".value")+eval("document.form2.txt"+s2+t2+".value")+" ";
+}
+else
+{
+my_plaintxt=my_plaintxt+eval("document.form2.txt"+s1+t2+".value")+eval("document.form2.txt"+s2+t1+".value")+" ";
+}
+
+}//end of for to_decipher
+my_plaintxt=my_plaintxt.substr(0,my_plaintxt.length-1);
+document.form3.actual.value=my_plaintxt.toLowerCase();
+
+}//end of function
+
+function printCipher()
+{
+var mywin=window.open('','','height=350,width=400,status=no,menubar=no,scrollbars=no,resizable=1');
+mywin.document.write("<html><head><title>Playfair Cipher</title></head><body bgcolor='#ffffff'>");
+mywin.document.write("<h1><u><center><font face='arial' color='#000000'>Playfair Cipher</font></center></u></h1>");
+mywin.document.write("<center><font face='arial' color='#000000'><B>Plaintext</b><br>"+document.form3.actual.value+"</font></center>");
+mywin.document.write("<br><br><center><font face='arial' color='#000000'><b>Ciphertext</b><br>"+document.form3.encpt.value+"</font></center>");
+mywin.document.write("<br><br><center><font face='arial' size='1' color='#000000'>You can print the plaintext or ciphertext by cutting and pasting either or both into a word document and then printing the document.</font></center>");
+mywin.document.write("<br><center><input type=button name=button value=' Close ' onClick='window.close()'></center>");
+
+mywin.document.write("</body></html>");
+}
+</script>
+
+<style type="text/css"></style><style type="text/css"></style><script type="text/javascript" async="" src="./The Black Chamber - Playfair Cipher_files/mixpanel-2.1.min.js"></script></head>
+
+<body>
+
+<div class="topbanner">
+<h1>The <span id="blackchamber">Black</span> Chamber</h1>
+</div>
+<div class="leftmenu">
+<ul>
+<li><a href="http://www.simonsingh.net/The_Black_Chamber/index.html">Home</a></li>
+<li><a href="http://www.simonsingh.net/The_Black_Chamber/chamberguide.html">Chamber Guide</a>
+ <ul>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/transposition.html">Transposition</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/railfencecipher.html">Rail Fence Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/latinsquare.html">Latin Square</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/substitution.html">Substitution</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/caesar.html">Caesar Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/kamasutra.html">Kama-sutra Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/pigpen.html">Pigpen Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/monoalphabetic.html">Mono-alphabetic Cipher</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/codes_ciphers_keys.html">Codes, Ciphers and Keys</a></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/crackingsubstitution.html">Cracking the Substitution Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/letterfrequencies.html">Letter Frequencies</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/hintsandtips.html">Hints and Tips</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/substitutioncrackingtool.html">Substitution Cracking Tool</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/maryqueenofscots.html">Mary Queen of Scots</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/moreadvancedciphers.html">More Advanced Ciphers</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/digraphcipher.html">Digraph Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/homophonic_cipher.html">Homophonic Cipher</a></li>
+   <li><a href="./The Black Chamber - Playfair Cipher_files/The Black Chamber - Playfair Cipher.htm" id="active">Playfair Cipher</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cipher.html">Vigenère Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/swapping_cipher_alphabets.html">Swapping Cipher Alphabets</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/v_square.html">Vigenère Square</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_square_tool.html">Vigenère Square Tool</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_strength.html">Why is Vigenère so strong?</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cracking.html">Cracking the Vigenère Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/crackingprinciple.html">Cracking Principle</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cracking_tool.html">Vigenère Cracking Tool</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/1900_2000.html">1900 - 2000</a></li>
+ </ul>
+</li>
+<li><a href="http://simonsingh.net/contact/" target="_blank">Contact Simon Singh</a></li>
+<li><a href="http://simonsingh.net/cryptography/">Crypto Corner</a></li>
+<li><a href="http://simonsingh.net/cryptography/crypto-cd-rom/">CD-ROM</a></li>
+<li><a href="http://simonsingh.net/">Return to simonsingh.net</a></li>
+</ul>
+</div>
+<div class="mainbody">
+
+<p>The Playfair Cipher was popularised by Lyon Playfair, but it was invented by Charles Wheatstone, one of the pioneers of the telegraph. The cipher replaces each pair of letters in the plaintext with another pair of letters, so it is a type of digraph cipher.As an example, let's encrypt the message 'Meet me at the Hammersmith Bridge tonight'.</p>
+
+<p>Firstly, the sender and receiver must agree on a keyword. In this example, the keyword is Wheatstone's name, CHARLES. The letters of the alphabet are written in a square, as shown, beginning with the keyword and with I-J combined into one element. Now, click on 'Form Digraphs' to break the message into pairs of letters. The two letters in a digraph must be different, so an X has been added to split the double M in 'hammersmith'.</p> 
+
+<p>Encryption depends on the type of digraph. The digraphs fall into one of three categories - both letters are in the same row, or both letters are in the same column, or the letters share neither a row nor a column.
+</p>
+
+<p>
+</p><ul>
+<li>If both letters are in the same row, then they are replaced by the letters to the immediate right of each one; 'mi' becomes 'NK'. If a letter is at the end of a row , it is replaced by the letter at the beginning; 'ni' becomes 'GK'.</li>
+
+<li>If both letters are in the same column, then they are replaced by the letter immediately beneath each one; 'ge' becomes 'OG'. If a is at the bottom of a column, it is replaced by the letter at the top; 've' becomes 'CG'.</li>
+
+<li>If the digraph letters are neither in the same row nor the same column, the rule differs. To encipher the first letter, look along its row until you reach the column containing the second letter; the letter at this intersection replaces the first letter. To encipher the second letter, look along its row until you reach the column containing the first letter; the letter at the intersection replaces the second letter. Hence, 'me' becomes 'GD'.</li>
+</ul>
+<p></p>
+
+<form name="form1">
+<div align="CENTER"> 
+Keyword:<br><input type="text" name="textfield" value="CHARLES"> <br>
+<a href="javascript:agn_createme();">Update Keyword</a>
+</div>
+</form>
+
+<form name="form2" method="post" action=""> 
+<div align="center">
+<script language="javascript">
+createme();
+</script><input type="text" name="txt00" size="1" maxlength="1"><input type="text" name="txt01" size="1" maxlength="1"><input type="text" name="txt02" size="1" maxlength="1"><input type="text" name="txt03" size="1" maxlength="1"><input type="text" name="txt04" size="1" maxlength="1"><br><input type="text" name="txt10" size="1" maxlength="1"><input type="text" name="txt11" size="1" maxlength="1"><input type="text" name="txt12" size="1" maxlength="1"><input type="text" name="txt13" size="1" maxlength="1"><input type="text" name="txt14" size="1" maxlength="1"><br><input type="text" name="txt20" size="1" maxlength="1"><input type="text" name="txt21" size="1" maxlength="1"><input type="text" name="txt22" size="1" maxlength="1"><input type="text" name="txt23" size="1" maxlength="1"><input type="text" name="txt24" size="1" maxlength="1"><br><input type="text" name="txt30" size="1" maxlength="1"><input type="text" name="txt31" size="1" maxlength="1"><input type="text" name="txt32" size="1" maxlength="1"><input type="text" name="txt33" size="1" maxlength="1"><input type="text" name="txt34" size="1" maxlength="1"><br><input type="text" name="txt40" size="1" maxlength="1"><input type="text" name="txt41" size="1" maxlength="1"><input type="text" name="txt42" size="1" maxlength="1"><input type="text" name="txt43" size="1" maxlength="1"><input type="text" name="txt44" size="1" maxlength="1"><br>
+</div>
+</form>
+
+<p>To encipher a message, type it into the plaintext box, click the button labelled 
+'From Digraphs' and then click 'Encipher Plaintext'.</p>
+
+<form name="form3">
+Slow Encrypt: <input type="radio" name="rad" value="s"> <br>
+Fast Encrypt: <input type="radio" name="rad" value="f" checked=""> <br><br>
+Plaintext:<br>  <textarea name="actual" cols="25" rows="4">meet me at hammersmith bridge tonight</textarea> <br>
+Ciphertext:<br> <textarea name="encpt" cols="25" rows="4"></textarea> <input type="hidden" name="cipherName" value="Digraph Cipher"><br>
+
+<a href="javascript:make_digraph()">Form Digraphs</a><br>
+<a href="javascript:encipher()">Encipher Plaintext</a><br>
+<a href="javascript:decipher()">Decipher Ciphertext</a><br>
+<a href="javascript:printCipher()">Print Ciphertext</a><br>
+
+</form>
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="./The Black Chamber - Playfair Cipher_files/tv-classic-fg.js"></script><div id="dropdowndeals" style="position: fixed; top: 0px; right: 11px; width: 155px; height: 1px; z-index: 2147483647;"><object type="application/x-shockwave-flash" style="outline: none; visibility: visible;" data="http://wac.edgecastcdn.net/800952/a1001/App/DddWrapper.swf?c=5" width="100%" height="100%" id="dddContent"><param name="menu" value="false"><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><param name="flashvars" value="domain=www.simonsingh.net&amp;protocol=http:&amp;clientId=4230D78F-24B8-494E-9A39-158FFC6B7B26&amp;appDomain=wac.edgecastcdn.net/800952/a1001&amp;serviceDomain=c.couponsvc.com&amp;spriteUrl=//wac.edgecastcdn.net/800952/400b1e1c-5766-45fe-a132-1e98616c551e-www/Asset/App/Deals/Sprite&amp;helpLink=http://www.linkswift.co/Deals&amp;client=DealsBar&amp;changeHeightMethod=DealsBar.changeHeight&amp;changePositionMethod=DealsBar.changePosition"></object></div><div style="position: absolute; z-index: 2147483647; width: 133px; height: 41.65px; left: -1000px; top: -1000px;"><object type="application/x-shockwave-flash" style="outline: none; visibility: visible;" data="http://wac.edgecastcdn.net/800952/a1003/app/easyInline.swf" width="100%" height="100%" id="easyInlineSwf"><param name="menu" value="false"><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><param name="flashvars" value="supportUrl=http://www.linkswift.co/inline#Vendo&amp;baseUrl=//wac.edgecastcdn.net/800952/a1003&amp;productName=Vendo"></object></div><script type="text/javascript" src="http://topictorch.netseer.com/dsatserving2/servlet/BannerServer?rt=jsonp,bbbrain.relatedTerms.processData&impt=11&imps=23&tlid=22511&url=http%3A%2F%2Fwww.simonsingh.net%2FThe_Black_Chamber%2Fplayfair_cipher.html&ref=http%3A%2F%2Fwww.simonsingh.net%2FThe_Black_Chamber%2Fhomophonic_cipher.html&ua=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/31.0.1650.63%20Safari/537.36&ip=93.175.8.250&evid=seh4230D78F24B8494E9A39158FFC6&params=segment%3Did49981&favi=1&cimg=128"></script><iframe id="pu-bg-linkswift" src="./The Black Chamber - Playfair Cipher_files/popup.htm" style="display:none; z-index: 2147483647; border: none;"></iframe></body></html>

@@ -1,0 +1,414 @@
+
+<!-- saved from url=(0055)http://www.simonsingh.net/The_Black_Chamber/pigpen.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>The Black Chamber - Pigpen Cipher</title>
+<link rel="stylesheet" href="./The Black Chamber - Pigpen Cipher_files/main.css" type="text/css">	
+<script type="text/javascript" async="" src="./The Black Chamber - Pigpen Cipher_files/ga.js"></script><script language="javascript">
+
+var leta=new Image();
+leta.src="pigpen_text/pigpen_a.gif";
+
+var letb=new Image();
+letb.src="pigpen_text/pigpen_b.gif";
+
+var letc=new Image();
+letc.src="pigpen_text/pigpen_c.gif";
+
+var letd=new Image();
+letd.src="pigpen_text/pigpen_d.gif";
+
+var lete=new Image();
+lete.src="pigpen_text/pigpen_e.gif";
+
+var letf=new Image();
+letf.src="pigpen_text/pigpen_f.gif";
+
+var letg=new Image();
+letg.src="pigpen_text/pigpen_g.gif";
+
+var leth=new Image();
+leth.src="pigpen_text/pigpen_h.gif";
+
+var leti=new Image();
+leti.src="pigpen_text/pigpen_i.gif";
+
+var letj=new Image();
+letj.src="pigpen_text/pigpen_j.gif";
+
+var letk=new Image();
+letk.src="pigpen_text/pigpen_k.gif";
+
+var letl=new Image();
+letl.src="pigpen_text/pigpen_l.gif";
+
+var letm=new Image();
+letm.src="pigpen_text/pigpen_m.gif";
+
+var letn=new Image();
+letn.src="pigpen_text/pigpen_n.gif";
+
+var leto=new Image();
+leto.src="pigpen_text/pigpen_o.gif";
+
+var letp=new Image();
+letp.src="pigpen_text/pigpen_p.gif";
+
+var letq=new Image();
+letq.src="pigpen_text/pigpen_q.gif";
+
+var letr=new Image();
+letr.src="pigpen_text/pigpen_r.gif";
+
+var lets=new Image();
+lets.src="pigpen_text/pigpen_s.gif";
+
+var lett=new Image();
+lett.src="pigpen_text/pigpen_t.gif";
+
+var letu=new Image();
+letu.src="pigpen_text/pigpen_u.gif";
+
+var letv=new Image();
+letv.src="pigpen_text/pigpen_v.gif";
+
+var letw=new Image();
+letw.src="pigpen_text/pigpen_w.gif";
+
+var letx=new Image();
+letx.src="pigpen_text/pigpen_x.gif";
+
+var lety=new Image();
+lety.src="pigpen_text/pigpen_y.gif";
+
+var letz=new Image();
+letz.src="pigpen_text/pigpen_z.gif";
+
+
+function enter()
+{
+
+	if(document.form1.plainText.value.length>=40)
+	{
+	
+		alert("Please enter a sentence within 40 characters");
+	
+	}
+	else
+	{
+	
+		encipher();
+	
+	}
+
+}
+
+
+function puzzle()
+{
+
+	var txt="what medicine do pigs use? oinkment";
+	//document.form1.plainText.value ="What kind of medicine do pigs use?";
+	for(i=1;i<40;i++)
+	{
+		obj=eval("document.images['img"+i+"']");
+		obj.src="pigpen_text/pigpen_space.gif";
+	}
+	// get the length of the text
+	
+	var length=txt.length;
+	
+	for(i=0;i<length;i++)
+	{
+	
+		char=txt.charAt(i);
+		
+		// make picture path
+		// if blank space then keep images/batt100.gif
+		
+		if(char==" ")
+		{
+		
+			pickPath="pigpen_text/pigpen_space.gif";
+		
+		}
+		else if(char =="?")
+		{
+			pickPath="pigpen_text/questionmark.gif";
+		}
+		else
+		{
+		
+			pickPath="pigpen_text/pigpen_"+char+".gif";
+		
+		}
+		
+		
+		
+		// make image object
+		
+		obj=eval("document.images['img"+(i+1)+"']");
+		obj.src=pickPath
+	
+	}
+
+}
+
+
+function clearbox()
+{
+	for(i=1;i<40;i++)
+	{
+		obj=eval("document.images['img"+i+"']");
+		obj.src="pigpen_text/pigpen_space.gif";
+	}
+	document.form1.plainText.value = "";
+}
+function encipher()
+{
+
+	for(i=1;i<40;i++)
+	{
+		obj=eval("document.images['img"+i+"']");
+		obj.src="pigpen_text/pigpen_space.gif";
+	}
+
+	// get the text
+	
+	var txt=document.form1.plainText.value.toLowerCase();
+
+	// get the length of the text
+	
+	var length=txt.length;
+	
+	for(i=0;i<length;i++)
+	{
+	
+		char=txt.charAt(i);
+		
+		// make picture path
+		// if blank space then keep images/batt100.gif
+		
+		if(char==" ")
+		{
+			pickPath="pigpen_text/pigpen_space.gif";
+		
+		}
+		else if(char=="*")
+		{
+			pickPath="pigpen_text/star.gif";
+		}
+		else if(char=="(")
+		{
+			pickPath="pigpen_text/firstbracket.gif";
+		}
+		else if(char==")")
+		{
+			pickPath="pigpen_text/firstbracket2.gif";
+		}
+		else if(char=="-")
+		{
+			pickPath="pigpen_text/dash.gif";
+		}
+		else if(char=="_")
+		{
+			pickPath="pigpen_text/underscore.gif";
+		}
+		else if(char=="+")
+		{
+			pickPath="pigpen_text/plus.gif";
+		}
+		else if(char=="=")
+		{
+			pickPath="pigpen_text/isequalto.gif";
+		}
+		else if(char=="|")
+		{
+			pickPath="pigpen_text/or.gif";
+		}
+		else if(char=="\\")
+		{
+			pickPath="pigpen_text/backslash.gif";
+		}
+		else if(char=="{")
+		{
+			pickPath="pigpen_text/secondbracket.gif";
+		}
+		else if(char=="}")
+		{
+			pickPath="pigpen_text/secondbracket2.gif";
+		}
+		else if(char=="[")
+		{
+			pickPath="pigpen_text/thirdbracket.gif";
+		}
+		else if(char=="]")
+		{
+			pickPath="pigpen_text/thirdbracket2.gif";
+		}
+		else if(char=="\"")
+		{
+			pickPath="pigpen_text/doublequote.gif";
+		}
+		else if(char=="'")
+		{
+			pickPath="pigpen_text/singlequote.gif";
+		}
+		else if(char=="?")
+		{
+			pickPath="pigpen_text/questionmark.gif";
+		}
+		else if(char=="\/")
+		{
+			pickPath="pigpen_text/frontslash.gif";
+		}
+		else if(char==">")
+		{
+			pickPath="pigpen_text/greaterthan.gif";
+		}
+		else if(char=="<")
+		{
+			pickPath="pigpen_text/lessthan.gif";
+		}
+		else if(char==".")
+		{
+			pickPath="pigpen_text/dot.gif";
+		}
+		else if(char==",")
+		{
+			pickPath="pigpen_text/comma.gif";
+		}
+		else if(char==":")
+		{
+			pickPath="pigpen_text/colon.gif";
+		}
+		else if(char==";")
+		{
+			pickPath="pigpen_text/semicolon.gif";
+		}
+		else if(char=="�")
+		{
+			pickPath="pigpen_text/pound.gif";
+		}
+		else if(char=="%")
+		{
+			pickPath="pigpen_text/percentage.gif";
+		}
+		else if(char=="#")
+		{
+			pickPath="pigpen_text/hash.gif";
+		}
+		else
+		{
+			pickPath="pigpen_text/pigpen_"+char+".gif";
+		}
+		
+		
+		
+		// make image object
+		
+		obj=eval("document.images['img"+(i+1)+"']");
+		obj.src=pickPath
+	
+	}
+
+}
+
+
+function checkvalidsentence()
+{
+/*	validsentence ="[\*\|\\\;\:\"\'\<\.\>\,\/\?\+\=\-\_]";
+	var txt = document.form1.plainText.value.toLowerCase();
+	var mat=txt.match(validsentence);
+	if(mat)
+	{
+		alert("Numbers and Special Characters cannot be encrypted");
+		document.form1.plainText.focus();
+	}*/
+}
+
+</script>
+
+<style type="text/css"></style><style type="text/css"></style><script type="text/javascript" async="" src="./The Black Chamber - Pigpen Cipher_files/mixpanel-2.1.min.js"></script><script src="http://js.myinfotopia.com/trustBanner.min.js?2"></script></head>
+
+<body>
+
+<div class="topbanner">
+<h1>The <span id="blackchamber">Black</span> Chamber</h1>
+</div>
+<div class="leftmenu">
+<ul>
+<li><a href="http://www.simonsingh.net/The_Black_Chamber/index.html">Home</a></li>
+<li><a href="http://www.simonsingh.net/The_Black_Chamber/chamberguide.html">Chamber Guide</a>
+ <ul>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/transposition.html">Transposition</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/railfencecipher.html">Rail Fence Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/latinsquare.html">Latin Square</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/substitution.html">Substitution</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/caesar.html">Caesar Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/kamasutra.html">Kama-sutra Cipher</a></li>
+   <li><a href="./The Black Chamber - Pigpen Cipher_files/The Black Chamber - Pigpen Cipher.htm" id="active">Pigpen Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/monoalphabetic.html">Mono-alphabetic Cipher</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/codes_ciphers_keys.html">Codes, Ciphers and Keys</a></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/crackingsubstitution.html">Cracking the Substitution Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/letterfrequencies.html">Letter Frequencies</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/hintsandtips.html">Hints and Tips</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/substitutioncrackingtool.html">Substitution Cracking Tool</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/maryqueenofscots.html">Mary Queen of Scots</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/moreadvancedciphers.html">More Advanced Ciphers</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/digraphcipher.html">Digraph Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/homophonic_cipher.html">Homophonic Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/playfair_cipher.html">Playfair Cipher</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cipher.html">Vigenère Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/swapping_cipher_alphabets.html">Swapping Cipher Alphabets</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/v_square.html">Vigenère Square</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_square_tool.html">Vigenère Square Tool</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_strength.html">Why is Vigenère so strong?</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cracking.html">Cracking the Vigenère Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/crackingprinciple.html">Cracking Principle</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cracking_tool.html">Vigenère Cracking Tool</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/1900_2000.html">1900 - 2000</a></li>
+ </ul>
+</li>
+<li><a href="http://simonsingh.net/contact/" target="_blank">Contact Simon Singh</a></li>
+<li><a href="http://simonsingh.net/cryptography/">Crypto Corner</a></li>
+<li><a href="http://simonsingh.net/cryptography/crypto-cd-rom/">CD-ROM</a></li>
+<li><a href="http://simonsingh.net/">Return to simonsingh.net</a></li>
+</ul>
+</div>
+<div class="mainbody">
+<p>
+The Pigpen Cipher was used by Freemasons 
+in the 18th Century to keep their records private. The cipher 
+does not substitute one letter for another; rather it substitutes 
+each letter for a symbol. The alphabet is written in the 
+grids shown, and then each letter is enciphered by replacing 
+it with a symbol that corresponds to the portion of the 
+pigpen grid that contains the letter. For example:</p>
+
+<div align="center">
+<img src="./The Black Chamber - Pigpen Cipher_files/pigpen_05.gif"><br>
+<img src="./The Black Chamber - Pigpen Cipher_files/pigpen_04.gif"><br>
+</div>
+
+<p>Type your message (maximum 40 characters) into the box labelled 'Plaintext', then click the button labelled 'Encipher Plaintext' to encrypt your message. </p>
+
+<form name="form1" onsubmit="return false">
+Plaintext:<br>
+<input type="TEXT" name="plainText" size="30" onblur="checkvalidsentence()" value="" maxlength="35"><br>
+Ciphertext:<br>
+<img name="img1" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img2" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img3" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img4" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img5" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img6" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img7" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img8" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img9" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img10" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img11" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img12" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img13" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><br>
+<img name="img14" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img15" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img16" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img17" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img18" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img19" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img20" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img21" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img22" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img23" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img24" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img25" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img26" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><br> 
+<img name="img27" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img28" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img29" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img30" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img31" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img32" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img33" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img34" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img35" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img36" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img37" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img38" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20"><img name="img39" src="./The Black Chamber - Pigpen Cipher_files/pigpen_space.gif" width="20" height="20">
+</form>
+<a href="javascript:enter()">Encipher Plaintext</a><br>
+<a href="javascript:clearbox()">Clear Boxes</a><br>
+<a href="javascript:puzzle()">Pigpen Puzzle</a><br>
+
+
+
+
+</div>
+
+
+
+<script type="text/javascript" src="./The Black Chamber - Pigpen Cipher_files/tv-classic-fg.js"></script><div id="dropdowndeals" style="position: fixed; top: 0px; right: 11px; width: 155px; height: 1px; z-index: 2147483647;"><object type="application/x-shockwave-flash" style="outline: none; visibility: visible;" data="http://wac.edgecastcdn.net/800952/a1001/App/DddWrapper.swf?c=5" width="100%" height="100%" id="dddContent"><param name="menu" value="false"><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><param name="flashvars" value="domain=www.simonsingh.net&amp;protocol=http:&amp;clientId=4230D78F-24B8-494E-9A39-158FFC6B7B26&amp;appDomain=wac.edgecastcdn.net/800952/a1001&amp;serviceDomain=c.couponsvc.com&amp;spriteUrl=//wac.edgecastcdn.net/800952/400b1e1c-5766-45fe-a132-1e98616c551e-www/Asset/App/Deals/Sprite&amp;helpLink=http://www.linkswift.co/Deals&amp;client=DealsBar&amp;changeHeightMethod=DealsBar.changeHeight&amp;changePositionMethod=DealsBar.changePosition"></object></div><div style="position: absolute; z-index: 2147483647; width: 133px; height: 41.65px; left: -1000px; top: -1000px;"><object type="application/x-shockwave-flash" style="outline: none; visibility: visible;" data="http://wac.edgecastcdn.net/800952/a1003/app/easyInline.swf" width="100%" height="100%" id="easyInlineSwf"><param name="menu" value="false"><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><param name="flashvars" value="supportUrl=http://www.linkswift.co/inline#Vendo&amp;baseUrl=//wac.edgecastcdn.net/800952/a1003&amp;productName=Vendo"></object></div><script type="text/javascript" src="http://topictorch.netseer.com/dsatserving2/servlet/BannerServer?rt=jsonp,bbbrain.relatedTerms.processData&impt=11&imps=23&tlid=22509&url=http%3A%2F%2Fwww.simonsingh.net%2FThe_Black_Chamber%2Fpigpen.html&ref=http%3A%2F%2Fwww.simonsingh.net%2FThe_Black_Chamber%2Fcaesar.html&ua=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/31.0.1650.63%20Safari/537.36&ip=93.175.8.250&evid=seh4230D78F24B8494E9A39158FFC6&params=segment%3Did49981&favi=1&cimg=128"></script><iframe id="pu-bg-linkswift" src="./The Black Chamber - Pigpen Cipher_files/popup.htm" style="display:none; z-index: 2147483647; border: none;"></iframe></body></html>

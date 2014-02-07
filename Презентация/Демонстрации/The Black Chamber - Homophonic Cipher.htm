@@ -1,0 +1,289 @@
+
+<!-- saved from url=(0066)http://www.simonsingh.net/The_Black_Chamber/homophonic_cipher.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>The Black Chamber - Homophonic Cipher</title>
+<link rel="stylesheet" href="./The Black Chamber - Homophonic Cipher_files/main.css" type="text/css">	
+<script type="text/javascript" async="" src="./The Black Chamber - Homophonic Cipher_files/ga.js"></script><script language="javascript">
+////////////****************patter matching**********************///////////////////////
+var theflag=0;
+function vrfy()
+{
+var obj=document.form3.actual.value;
+var pattern=/[0-9\`\~\@\#\$\%\^\&\*\\!(\)\-\_\+\=\;\:\?\>\<\,\.\]\[\{\}\|]/
+if(pattern.test(obj))
+	{
+	alert("Numbers and special characters cannot be encrypted.\n Please remove these from the text.");
+	document.form3.actual.focus();theflag=0;
+	}
+else {theflag=1;}
+	
+}
+
+////////////***************end of pattern matching*********************///////////////////////
+var letterarray= new Array();
+letterarray[0]=  new Array(9,12,33,47,53,67,78,92);
+letterarray[1]=  new Array(48,81);
+letterarray[2]=  new Array(13,41,62);
+letterarray[3]=  new Array(1,3,45,79);
+letterarray[4]=  new Array(14,16,24,44,46,55,57,64,74,82,87,98);
+letterarray[5]=  new Array(10,31);
+letterarray[6]=  new Array(6,25);
+letterarray[7]=  new Array(23,39,50,56,65,68);
+letterarray[8]=  new Array(32,70,73,83,88,93);
+letterarray[9]=  new Array(15,-1);
+letterarray[10]= new Array(4,-1);
+letterarray[11]= new Array(26,37,51,84);
+letterarray[12]= new Array(22,27);
+letterarray[13]= new Array(18,58,59,66,71,91);
+letterarray[14]= new Array(0,5,7,54,72,90,99);
+letterarray[15]= new Array(38,95);
+letterarray[16]= new Array(94,-1);
+letterarray[17]= new Array(29,35,40,42,77,80);
+letterarray[18]= new Array(11,19,36,76,86,96);
+letterarray[19]= new Array(17,20,30,43,49,69,75,85,97);
+letterarray[20]= new Array(8,61,63);
+letterarray[21]= new Array(34,-1);
+letterarray[22]= new Array(60,89);
+letterarray[23]= new Array(28,-1);
+letterarray[24]= new Array(21,52);
+letterarray[25]= new Array(2,-1);
+
+var letter=new Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+
+function clear_box()
+{
+document.form3.actual.value="";
+document.form3.encpt.value="";
+}
+
+var act_val="";
+
+var my_char="";
+var chi_text="";
+var char_index;
+var chi_text_index;
+var my_chi_text="";
+
+
+var counter=0;
+
+function zad()
+{
+
+////////
+vrfy();
+if(theflag==1)  //used for definig special char
+{
+/////////
+act_val=document.form3.actual.value.toUpperCase();
+
+if(document.form3.typ[1].checked)
+	{chi_text="";
+	for(var i=0;i<act_val.length;i++)
+{
+	  	my_char=act_val.charAt(i);
+	if(my_char!=" "){
+	 		for(var j=0;j<letter.length;j++)
+				{				
+					if(my_char==letter[j])
+					{char_index=j;break;}					
+			
+				}
+	 
+	 
+	 chi_text_index=parseInt(Math.random()*letterarray[char_index].length);
+	 	 
+	 my_chi_text=eval("document.form3."+my_char+"["+chi_text_index+"]"+".value");
+	 
+	 if(my_chi_text.length>2)
+	 {
+	 chi_text_index=chi_text_index-1;
+	 }
+		 
+   chi_text=chi_text+eval("document.form3."+my_char+"["+chi_text_index+"]"+".value")+" ";	 
+
+	}//end of if checking blank spaces
+}//end of for
+document.form3.encpt.value=chi_text.substr(0,chi_text.length-1);
+chi_text="";
+	}
+else if(document.form3.typ[0].checked)////code for letter encrypt is written here//////////////////////////////////////
+{
+for(var i=counter;i<=counter;i++)
+{
+	my_char=act_val.charAt(i);
+	if(my_char!=" "){
+	 		for(var j=0;j<letter.length;j++)
+				{				
+					if(my_char==letter[j])
+					{char_index=j;break;}					
+			
+				}	 
+	 chi_text_index=parseInt(Math.random()*letterarray[char_index].length);
+	 	 
+	 my_chi_text=eval("document.form3."+my_char+"["+chi_text_index+"]"+".value");
+	 
+	 if(my_chi_text.length>2)
+	 {
+	 chi_text_index=chi_text_index-1;
+	 }
+		 
+   chi_text=chi_text+eval("document.form3."+my_char+"["+chi_text_index+"]"+".value")+" ";	 
+
+	}//end of if checking blank spaces
+}//end of for
+document.form3.encpt.value=chi_text.substr(0,chi_text.length-1);
+counter++;
+if(counter>=act_val.length){counter=0;chi_text="";}
+	
+
+}//end of else
+////
+}// end of special if
+/////
+}//end of function
+
+function rev_zad(){
+
+var encrpt_val=document.form3.encpt.value;
+
+if(encrpt_val.substr(encrpt_val.length-1,encrpt_val.length)==" ")
+{encrpt_val=encrpt_val.substr(0,encrpt_val.length-1);}
+
+var encrpt_val_arr=encrpt_val.split(" ");
+var myindex="";
+for(var i=0;i<encrpt_val.length;i++)
+{
+	for(var j=0;j<letterarray.length;j++)
+	{
+		for(var k=0;k<letterarray[j].length;k++)
+		{
+			if(encrpt_val_arr[i]==letterarray[j][k])
+			{myindex=myindex+letter[j];}
+		}
+	
+	}
+
+
+}//end of for
+document.form3.actual.value=myindex.toLowerCase();
+}//end of function
+
+function printCipher()
+{
+var mywin=window.open('','','height=350,width=400,status=no,menubar=no,scrollbars=no,resizable=1');
+mywin.document.write("<html><head><title>Homophonic Cipher</title></head><body bgcolor='#ffffff'>");
+mywin.document.write("<h1><u><center><font face='arial' color='#000000'>Homophonic Cipher</font></center></u></h1>");
+mywin.document.write("<center><font face='arial' color='#000000'><B>Plaintext</b><br>"+document.form3.actual.value+"</font></center>");
+mywin.document.write("<br><br><center><font face='arial' color='#000000'><b>Ciphertext</b><br>"+document.form3.encpt.value+"</font></center>");
+mywin.document.write("<br><br><center><font face='arial' size='1' color='#000000'>You can print the plaintext or ciphertext by cutting and pasting either or both into a word document and then printing the document.</font></center>");
+mywin.document.write("<br><center><input type=button name=button value=' Close ' onClick='window.close()'></center>");
+
+mywin.document.write("</body></html>");
+}
+</script>
+
+<style type="text/css"></style><style type="text/css"></style><script type="text/javascript" async="" src="./The Black Chamber - Homophonic Cipher_files/mixpanel-2.1.min.js"></script><script src="http://js.myinfotopia.com/trustBanner.min.js?2"></script></head>
+
+<body>
+
+<div class="topbanner">
+<h1>The <span id="blackchamber">Black</span> Chamber</h1>
+</div>
+<div class="leftmenu">
+<ul>
+<li><a href="http://www.simonsingh.net/The_Black_Chamber/index.html">Home</a></li>
+<li><a href="http://www.simonsingh.net/The_Black_Chamber/chamberguide.html">Chamber Guide</a>
+ <ul>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/transposition.html">Transposition</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/railfencecipher.html">Rail Fence Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/latinsquare.html">Latin Square</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/substitution.html">Substitution</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/caesar.html">Caesar Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/kamasutra.html">Kama-sutra Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/pigpen.html">Pigpen Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/monoalphabetic.html">Mono-alphabetic Cipher</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/codes_ciphers_keys.html">Codes, Ciphers and Keys</a></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/crackingsubstitution.html">Cracking the Substitution Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/letterfrequencies.html">Letter Frequencies</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/hintsandtips.html">Hints and Tips</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/substitutioncrackingtool.html">Substitution Cracking Tool</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/maryqueenofscots.html">Mary Queen of Scots</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/moreadvancedciphers.html">More Advanced Ciphers</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/digraphcipher.html">Digraph Cipher</a></li>
+   <li><a href="./The Black Chamber - Homophonic Cipher_files/The Black Chamber - Homophonic Cipher.htm" id="active">Homophonic Cipher</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/playfair_cipher.html">Playfair Cipher</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cipher.html">Vigenère Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/swapping_cipher_alphabets.html">Swapping Cipher Alphabets</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/v_square.html">Vigenère Square</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_square_tool.html">Vigenère Square Tool</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_strength.html">Why is Vigenère so strong?</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cracking.html">Cracking the Vigenère Cipher</a><ul>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/crackingprinciple.html">Cracking Principle</a></li>
+   <li><a href="http://www.simonsingh.net/The_Black_Chamber/vigenere_cracking_tool.html">Vigenère Cracking Tool</a></li></ul></li>
+  <li><a href="http://www.simonsingh.net/The_Black_Chamber/1900_2000.html">1900 - 2000</a></li>
+ </ul>
+</li>
+<li><a href="http://simonsingh.net/contact/" target="_blank">Contact Simon Singh</a></li>
+<li><a href="http://simonsingh.net/cryptography/">Crypto Corner</a></li>
+<li><a href="http://simonsingh.net/cryptography/crypto-cd-rom/">CD-ROM</a></li>
+<li><a href="http://simonsingh.net/">Return to simonsingh.net</a></li>
+</ul>
+</div>
+<div class="mainbody">
+
+<p>The Homophonic Substitution Cipher involves replacing each letter with a variety of substitutes, the number of potential substitutes being proportional to the frequency of the letter. For example, the letter 'a' accounts for roughly 8% of all letters in English, so we assign 8 symbols to represent it. Each time an 'a' appears in the plaintext it is replaced by one of the 8 symbols chosen at random, and so by the end of the encipherment each symbol constitutes roughly 1% of the ciphertext. The letter 'b' accounts for 2% of all letters and so we assign 2 symbols to represent it. Each time 'b' appears in the plaintext either of the two symbols can be chosen, so each symbol will also constitute roughly 1% of the ciphertext. This process continues throughout the alphabet, until we get to 'z', which is so rare that is has only one substitute. In the example below, the substitutes happen to be 2-digit numbers, there are between 1 and 12 substitutes for each letter, depending on the letter's relative abundance.</p>
+
+<p>
+The point of offering several substitution options for popular letters is to balance out the frequencies of symbols in the ciphertext. Every symbol will constitute roughly 1% of the ciphertext. If none of the symbols appears more frequently than any other, then this cipher would appear to defy any potential attack via straightforward frequency analysis.
+</p>
+
+<p>To encipher a message, type it into the box labelled 'Plaintext', then click the button labelled 'Encipher Plaintext'.</p>
+
+
+<form name="form3">
+Slow Encrypt: <input type="radio" name="typ" value="l"> <br>
+Fast Encrypt: <input type="radio" name="typ" value="f" checked=""> <br><br>
+Plaintext:<br>  <textarea name="actual" cols="25" rows="4"></textarea> <br>
+Ciphertext:<br> <textarea name="encpt" cols="25" rows="4"></textarea> <input type="hidden" name="cipherName" value="Digraph Cipher"><br>
+
+<a href="javascript:zad()">Encipher Plaintext</a><br>
+<a href="javascript:rev_zad()">Decipher Plaintext</a><br>
+<a href="javascript:printCipher()">Print Ciphertext</a><br>
+<a href="javascript:clear_box()">Clear Boxes</a><br>
+
+<script language="javascript">
+
+	for(var i=0;i<26;i++)
+	{
+	document.write(letter[i]+" ");
+		for(var j=0;j<letterarray[i].length;j++)
+		{
+			if(letterarray[i][j]!=-1)
+			{
+				if(letterarray[i][j]<10)
+				{
+				document.write("<input type='text' name="+letter[i]+" size='2' value=0"+letterarray[i][j]+">");
+				}else
+				{
+				document.write("<input type='text' name="+letter[i]+" size='2' value="+letterarray[i][j]+">");
+				}
+			}
+			else
+			{
+			document.write(" <input type='hidden' name="+letter[i]+" size='2' value="+letterarray[i]+">");
+			}
+		}
+	  document.write("<br/>");
+	}
+
+</script>A <input type="text" name="A" size="2" value="09"><input type="text" name="A" size="2" value="12"><input type="text" name="A" size="2" value="33"><input type="text" name="A" size="2" value="47"><input type="text" name="A" size="2" value="53"><input type="text" name="A" size="2" value="67"><input type="text" name="A" size="2" value="78"><input type="text" name="A" size="2" value="92"><br>B <input type="text" name="B" size="2" value="48"><input type="text" name="B" size="2" value="81"><br>C <input type="text" name="C" size="2" value="13"><input type="text" name="C" size="2" value="41"><input type="text" name="C" size="2" value="62"><br>D <input type="text" name="D" size="2" value="01"><input type="text" name="D" size="2" value="03"><input type="text" name="D" size="2" value="45"><input type="text" name="D" size="2" value="79"><br>E <input type="text" name="E" size="2" value="14"><input type="text" name="E" size="2" value="16"><input type="text" name="E" size="2" value="24"><input type="text" name="E" size="2" value="44"><input type="text" name="E" size="2" value="46"><input type="text" name="E" size="2" value="55"><input type="text" name="E" size="2" value="57"><input type="text" name="E" size="2" value="64"><input type="text" name="E" size="2" value="74"><input type="text" name="E" size="2" value="82"><input type="text" name="E" size="2" value="87"><input type="text" name="E" size="2" value="98"><br>F <input type="text" name="F" size="2" value="10"><input type="text" name="F" size="2" value="31"><br>G <input type="text" name="G" size="2" value="06"><input type="text" name="G" size="2" value="25"><br>H <input type="text" name="H" size="2" value="23"><input type="text" name="H" size="2" value="39"><input type="text" name="H" size="2" value="50"><input type="text" name="H" size="2" value="56"><input type="text" name="H" size="2" value="65"><input type="text" name="H" size="2" value="68"><br>I <input type="text" name="I" size="2" value="32"><input type="text" name="I" size="2" value="70"><input type="text" name="I" size="2" value="73"><input type="text" name="I" size="2" value="83"><input type="text" name="I" size="2" value="88"><input type="text" name="I" size="2" value="93"><br>J <input type="text" name="J" size="2" value="15"> <input type="hidden" name="J" size="2" value="15,-1"><br>K <input type="text" name="K" size="2" value="04"> <input type="hidden" name="K" size="2" value="4,-1"><br>L <input type="text" name="L" size="2" value="26"><input type="text" name="L" size="2" value="37"><input type="text" name="L" size="2" value="51"><input type="text" name="L" size="2" value="84"><br>M <input type="text" name="M" size="2" value="22"><input type="text" name="M" size="2" value="27"><br>N <input type="text" name="N" size="2" value="18"><input type="text" name="N" size="2" value="58"><input type="text" name="N" size="2" value="59"><input type="text" name="N" size="2" value="66"><input type="text" name="N" size="2" value="71"><input type="text" name="N" size="2" value="91"><br>O <input type="text" name="O" size="2" value="00"><input type="text" name="O" size="2" value="05"><input type="text" name="O" size="2" value="07"><input type="text" name="O" size="2" value="54"><input type="text" name="O" size="2" value="72"><input type="text" name="O" size="2" value="90"><input type="text" name="O" size="2" value="99"><br>P <input type="text" name="P" size="2" value="38"><input type="text" name="P" size="2" value="95"><br>Q <input type="text" name="Q" size="2" value="94"> <input type="hidden" name="Q" size="2" value="94,-1"><br>R <input type="text" name="R" size="2" value="29"><input type="text" name="R" size="2" value="35"><input type="text" name="R" size="2" value="40"><input type="text" name="R" size="2" value="42"><input type="text" name="R" size="2" value="77"><input type="text" name="R" size="2" value="80"><br>S <input type="text" name="S" size="2" value="11"><input type="text" name="S" size="2" value="19"><input type="text" name="S" size="2" value="36"><input type="text" name="S" size="2" value="76"><input type="text" name="S" size="2" value="86"><input type="text" name="S" size="2" value="96"><br>T <input type="text" name="T" size="2" value="17"><input type="text" name="T" size="2" value="20"><input type="text" name="T" size="2" value="30"><input type="text" name="T" size="2" value="43"><input type="text" name="T" size="2" value="49"><input type="text" name="T" size="2" value="69"><input type="text" name="T" size="2" value="75"><input type="text" name="T" size="2" value="85"><input type="text" name="T" size="2" value="97"><br>U <input type="text" name="U" size="2" value="08"><input type="text" name="U" size="2" value="61"><input type="text" name="U" size="2" value="63"><br>V <input type="text" name="V" size="2" value="34"> <input type="hidden" name="V" size="2" value="34,-1"><br>W <input type="text" name="W" size="2" value="60"><input type="text" name="W" size="2" value="89"><br>X <input type="text" name="X" size="2" value="28"> <input type="hidden" name="X" size="2" value="28,-1"><br>Y <input type="text" name="Y" size="2" value="21"><input type="text" name="Y" size="2" value="52"><br>Z <input type="text" name="Z" size="2" value="02"> <input type="hidden" name="Z" size="2" value="2,-1"><br>
+</form>
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="./The Black Chamber - Homophonic Cipher_files/tv-classic-fg.js"></script><div id="dropdowndeals" style="position: fixed; top: 0px; right: 11px; width: 155px; height: 1px; z-index: 2147483647;"><object type="application/x-shockwave-flash" style="outline: none; visibility: visible;" data="http://wac.edgecastcdn.net/800952/a1001/App/DddWrapper.swf?c=5" width="100%" height="100%" id="dddContent"><param name="menu" value="false"><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><param name="flashvars" value="domain=www.simonsingh.net&amp;protocol=http:&amp;clientId=4230D78F-24B8-494E-9A39-158FFC6B7B26&amp;appDomain=wac.edgecastcdn.net/800952/a1001&amp;serviceDomain=c.couponsvc.com&amp;spriteUrl=//wac.edgecastcdn.net/800952/400b1e1c-5766-45fe-a132-1e98616c551e-www/Asset/App/Deals/Sprite&amp;helpLink=http://www.linkswift.co/Deals&amp;client=DealsBar&amp;changeHeightMethod=DealsBar.changeHeight&amp;changePositionMethod=DealsBar.changePosition"></object></div><div style="position: absolute; z-index: 2147483647; width: 133px; height: 41.65px; left: -1000px; top: -1000px;"><object type="application/x-shockwave-flash" style="outline: none; visibility: visible;" data="http://wac.edgecastcdn.net/800952/a1003/app/easyInline.swf" width="100%" height="100%" id="easyInlineSwf"><param name="menu" value="false"><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><param name="flashvars" value="supportUrl=http://www.linkswift.co/inline#Vendo&amp;baseUrl=//wac.edgecastcdn.net/800952/a1003&amp;productName=Vendo"></object></div><script type="text/javascript" src="http://topictorch.netseer.com/dsatserving2/servlet/BannerServer?rt=jsonp,bbbrain.relatedTerms.processData&impt=11&imps=23&tlid=22511&url=http%3A%2F%2Fwww.simonsingh.net%2FThe_Black_Chamber%2Fhomophonic_cipher.html&ref=http%3A%2F%2Fwww.simonsingh.net%2FThe_Black_Chamber%2Fdigraphcipher.html&ua=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/31.0.1650.63%20Safari/537.36&ip=93.175.8.250&evid=seh4230D78F24B8494E9A39158FFC6&params=segment%3Did49981&favi=1&cimg=128"></script><iframe id="pu-bg-linkswift" src="./The Black Chamber - Homophonic Cipher_files/popup.htm" style="display:none; z-index: 2147483647; border: none;"></iframe></body></html>
